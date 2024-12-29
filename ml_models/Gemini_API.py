@@ -5,7 +5,7 @@ import google.generativeai as genai
 # Function to configure the Gemini model
 def load_gemini_model():
     api_key = os.environ["API_KEY"]
-    genai.configure(api_key)
+    genai.configure(api_key=api_key)
     gemini_model = genai.GenerativeModel("gemini-1.5-flash")
     return gemini_model
 
