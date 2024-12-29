@@ -2,6 +2,7 @@ from flask import Flask
 from flask_smorest import Api
 from flask_cors import CORS
 from ml_models import load_models
+import os
 
 def create_app():
     app = Flask(__name__)
@@ -29,4 +30,4 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     # Bind to all interfaces to allow access over network
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
