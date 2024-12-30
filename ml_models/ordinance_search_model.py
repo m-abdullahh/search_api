@@ -146,12 +146,12 @@ def initialize_tm_ordiance_model(save_embeddings=False):
         "model": model
     }
 
-def query_tm_ordinance_model(query,  df_dict, query_type="text", dataset_type="trademark"):
-    print("datasetyupe: ",dataset_type)
+def query_tm_ordinance_model(query,  df_dict, query_type="text", case_type="trademark"):
+    print("datasetyupe: ",case_type)
     # Select dataset based on user input
-    if dataset_type == "trademark":
+    if case_type == "trademark":
         df, title_embeddings, desc_embeddings = df_dict["trademark"]
-    elif dataset_type == "copyright":
+    elif case_type == "copyright":
         df, title_embeddings, desc_embeddings = df_dict["copyright"]
     else:
         raise ValueError("Invalid dataset type. Use 'trademark' or 'copyright'.")

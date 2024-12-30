@@ -36,7 +36,7 @@
 #     if missing_columns:
 #         print("MISSINGGG")
 
-#     tm_cases_model = SentenceTransformer(
+#     cases_model = SentenceTransformer(
 #         os.path.join(base_path, "ml_models", "fine_tuned_legal_bert_dynamic_loss")
 #     )
 #     # model = SentenceTransformer("bert-base-nli-mean-tokens")
@@ -44,7 +44,7 @@
 #     if save_embeddings:
 #         for col in tm_cases_required_columns:
 #             tm_cases_df[col + "_embedding"] = tm_cases_df[col].apply(
-#                 lambda x: tm_cases_model.encode(str(x), convert_to_tensor=True)
+#                 lambda x: cases_model.encode(str(x), convert_to_tensor=True)
 #             )
 
 #         # Save the DataFrame with embeddings to a file
@@ -56,13 +56,13 @@
 #         print("Embeddings loaded.")
 
 #     print("Trademark Model is Ready.")
-#     return tm_cases_model, tm_cases_df, tm_cases_required_columns
+#     return cases_model, tm_cases_df, tm_cases_required_columns
 
 
 # def query_tm_cases_model(
-#     tm_cases_model, tm_cases_df, tm_cases_required_columns, query, top_k=3
+#     cases_model, tm_cases_df, tm_cases_required_columns, query, top_k=3
 # ):
-#     query_embeddings = tm_cases_model.encode(query, convert_to_tensor=True)
+#     query_embeddings = cases_model.encode(query, convert_to_tensor=True)
 
 #     selected_columns = tm_cases_required_columns
 
@@ -178,7 +178,7 @@ def initialize_tm_cases_model(save_embeddings=False):
     print("Models and embeddings are ready.")
     return model, tm_cases_df, cp_cases_df, required_columns
 
-def query_tm_cases_model(tm_cases_model, tm_cases_df, cp_cases_df, required_columns, query, top_k=3, case_type="trademark"):
+def query_tm_cases_model(cases_model, tm_cases_df, cp_cases_df, required_columns, query, case_type="trademark" ,top_k=3, ):
     # Select the appropriate dataset and embeddings based on case_type
     if case_type == "trademark":
         cases_df = tm_cases_df
@@ -187,7 +187,7 @@ def query_tm_cases_model(tm_cases_model, tm_cases_df, cp_cases_df, required_colu
     else:
         raise ValueError("Invalid case_type. Choose 'trademark' or 'copyright'.")
 
-    query_embeddings = tm_cases_model.encode(query, convert_to_tensor=True)
+    query_embeddings = cases_model.encode(query, convert_to_tensor=True)
 
     selected_columns = required_columns
 

@@ -97,6 +97,8 @@ class GenericSearch(MethodView):
     @blp.arguments(GenericSearchSchema, location="query")
     def get(self, search_data):
         query = search_data.get("text")
+        case_type = search_data.get("case_type", "trademark")  # Default to "trademark"
+
         if not query:
             return {"error": "No text query provided"}, 400
 
@@ -106,8 +108,9 @@ class GenericSearch(MethodView):
             cp_cases_df,
             required_columns,
             query,
+            case_type
         )
-        print(type(results), results)
+        print(type(results), len(results))
         return results
 
 
@@ -119,14 +122,16 @@ class TrademarkSearch(MethodView):
         text = search_data.get("text")
         section_no = search_data.get("section_no")
         query_type = search_data.get("query_type")
+        case_type = search_data.get("case_type", "trademark")  # Default to "trademark"
 
-        print(text, section_no, query_type)
+        print(text, section_no, query_type, case_type)
         query = section_no if query_type == "section_no" else text
 
         results = query_tm_ordinance_model(
             query,
             ordinance_dict,
             query_type,
+            case_type,  # Pass the case_type to the model
         )
         return results
 

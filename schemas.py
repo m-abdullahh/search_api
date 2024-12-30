@@ -4,11 +4,14 @@ from marshmallow.validate import OneOf
 
 class GenericSearchSchema(Schema):
     text = fields.String(required=True, load_only=True)
+    case_type = fields.String(required=False, load_only=True)
 
 
 class TrademarkSearchSchema(Schema):
 
     text = fields.String(required=False, load_only=True, nullable=True)
+    case_type = fields.String(required=False, load_only=True)
+
     section_no = fields.Int(required=False, load_only=True, nullable=True)
     query_type = fields.String(
         validate=OneOf(["text", "section_no"]), required=True, load_only=True
